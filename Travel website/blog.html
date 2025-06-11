@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Travel blog with expert tips, destination guides, and inspiring travel stories. Get insider advice for your next adventure.">
+    <meta name="keywords" content="travel blog, travel tips, destination guides, travel stories, adventure, vacation planning">
+    <title>Travel Blog - TravelWithArslan</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .blog-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(44, 90, 160, 0.8), rgba(255, 107, 107, 0.6)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 70px;
+        }
+        
+        .blog-content {
+            padding: 100px 0;
+        }
+        
+        .blog-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .blog-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .blog-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .blog-filters {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 25px;
+            border: 2px solid #2c5aa0;
+            background: transparent;
+            color: #2c5aa0;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #2c5aa0;
+            color: white;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .blog-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+        
+        .blog-category {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .blog-info {
+            padding: 30px;
+        }
+        
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .blog-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .blog-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .blog-excerpt {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .blog-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        
+        .author-info p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
+        }
+        
+        .featured-post {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin-bottom: 40px;
+        }
+        
+        .featured-image {
+            height: 400px;
+        }
+        
+        .featured-content {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .featured-badge {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            width: fit-content;
+            margin-bottom: 20px;
+        }
+        
+        .featured-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        
+        .featured-excerpt {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+        
+        .read-more-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: fit-content;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .read-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .newsletter-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .newsletter-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter-content p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background: #ff5252;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 60px;
+        }
+        
+        .pagination-btn {
+            padding: 10px 15px;
+            border: 2px solid #2c5aa0;
+            background: transparent;
+            color: #2c5aa0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .pagination-btn.active,
+        .pagination-btn:hover {
+            background: #2c5aa0;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-content {
+                padding: 40px 30px;
+            }
+            
+            .featured-title {
+                font-size: 1.8rem;
+            }
+            
+            .blog-filters {
+                justify-content: center;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><i class="fas fa-globe-americas"></i> TravelWithArslan</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="destinations.html" class="nav-link">Destinations</a>
+                </li>
+                <li class="nav-item">
+                    <a href="blog.html" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link btn-book">Book Now</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="blog-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Travel Stories & Tips</h1>
+            <p class="hero-subtitle">Discover insider secrets, expert advice, and inspiring stories from fellow travelers</p>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="blog-content">
+        <div class="container">
+            <div class="blog-header">
+                <h1>Latest Travel Insights</h1>
+                <p>From hidden gems to practical travel hacks, our blog is your ultimate guide to extraordinary adventures around the world.</p>
+            </div>
+
+            <!-- Blog Filters -->
+            <div class="blog-filters">
+                <button class="filter-btn active" data-category="all">All Posts</button>
+                <button class="filter-btn" data-category="tips">Travel Tips</button>
+                <button class="filter-btn" data-category="guides">Destination Guides</button>
+                <button class="filter-btn" data-category="culture">Culture & Food</button>
+                <button class="filter-btn" data-category="adventure">Adventure</button>
+                <button class="filter-btn" data-category="budget">Budget Travel</button>
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="blog-grid">
+                <!-- Featured Post -->
+                <article class="blog-card featured-post" data-category="guides">
+                    <div class="featured-image blog-image">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ultimate Santorini Guide">
+                    </div>
+                    <div class="featured-content">
+                        <div class="featured-badge">Featured Guide</div>
+                        <h2 class="featured-title">The Ultimate Guide to Santorini: Beyond the Instagram Photos</h2>
+                        <p class="featured-excerpt">Discover the real Santorini beyond the crowded viewpoints. From hidden beaches to local tavernas, we'll show you how to experience this Greek paradise like a local while avoiding the tourist traps.</p>
+                        <a href="#" class="read-more-btn">Read Full Guide</a>
+                    </div>
+                </article>
+
+                <!-- Regular Blog Posts -->
+                <article class="blog-card" data-category="tips">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Packing Tips">
+                        <div class="blog-category">Travel Tips</div>
+                    </div>
+                    <div class="blog-info">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> March 15, 2024</span>
+                            <span><i class="fas fa-clock"></i> 8 min read</span>
+                        </div>
+                        <h3 class="blog-title">10 Packing Hacks Every Traveler Should Know</h3>
+                        <p class="blog-excerpt">Master the art of efficient packing with these game-changing tips that will save you space, weight, and stress on your next adventure.</p>
+                        <div class="blog-author">
+                            <div class="author-avatar">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Sarah Johnson">
+                            </div>
+                            <div class="author-info">
+                                <h4>Sarah Johnson</h4>
+                                <p>Travel Expert</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="culture">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tokyo Food Scene">
+                        <div class="blog-category">Culture & Food</div>
+                    </div>
+                    <div class="blog-info">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> March 12, 2024</span>
+                            <span><i class="fas fa-clock"></i> 12 min read</span>
+                        </div>
+                        <h3 class="blog-title">A Foodie's Guide to Tokyo: From Street Food to Michelin Stars</h3>
+                        <p class="blog-excerpt">Explore Tokyo's incredible culinary landscape, from hidden ramen shops to world-renowned sushi counters that define Japanese cuisine.</p>
+                        <div class="blog-author">
+                            <div class="author-avatar">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Mike Chen">
+                            </div>
+                            <div class="author-info">
+                                <h4>Mike Chen</h4>
+                                <p>Food & Culture Writer</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="budget">
+                    <div class="blog-image">
+                        <img src="https://www.freepik.com/free-photo/tanah-lot-temple-bali-island-indonesia_11306613.htm#fromView=search&page=1&position=2&uuid=ab819639-4da4-47b1-ab4c-82036e40beb0&query=Bali" alt="Budget Travel Bali">
+                        <div class="blog-category">Budget Travel</div>
+                    </div>
+                    <div class="blog-info">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> March 10, 2024</span>
+                            <span><i class="fas fa-clock"></i> 10 min read</span>
+                        </div>
+                        <h3 class="blog-title">Bali on a Budget: How to Experience Paradise for Under $50/Day</h3>
+                        <p class="blog-excerpt">Discover how to enjoy Bali's beaches, temples, and culture without breaking the bank. Complete budget breakdown included.</p>
+                        <div class="blog-author">
+                            <div class="author-avatar">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Emma Rodriguez">
+                            </div>
+                            <div class="author-info">
+                                <h4>Emma Rodriguez</h4>
+                                <p>Budget Travel Specialist</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="adventure">
+                    <div class="blog-image">
+                        <img src="https://www.freepik.com/free-ai-image/mountain-landscape-with-fantasy-style-scene_133542867.htm#fromView=search&page=1&position=3&uuid=ffab752a-af3f-498f-b6b4-ea4ad123b1ae&query=inca+trail" alt="Mountain Adventure">
+                        <div class="blog-category">Adventure</div>
+                    </div>
+                    <div class="blog-info">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> March 8, 2024</span>
+                            <span><i class="fas fa-clock"></i> 15 min read</span>
+                        </div>
+                        <h3 class="blog-title">Conquering the Inca Trail: A Complete Preparation Guide</h3>
+                        <p class="blog-excerpt">Everything you need to know about hiking to Machu Picchu, from training tips to gear recommendations and what to expect.</p>
+                        <div class="blog-author">
+                            <div class="author-avatar">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="David Thompson">
+                            </div>
+                            <div class="author-info">
+                                <h4>David Thompson</h4>
+                                <p>Adventure Guide</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="tips">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Solo Travel">
+                        <div class="blog-category">Travel Tips</div>
+                    </div>
+                    <div class="blog-info">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> March 5, 2024</span>
+                            <span><i class="fas fa-clock"></i> 7 min read</span>
+                        </div>
+                        <h3 class="blog-title">Solo Female Travel: Safety Tips and Confidence Boosters</h3>
+                        <p class="blog-excerpt">Practical advice for women traveling alone, including safety strategies, confidence-building tips, and destination recommendations.</p>
+                        <div class="blog-author">
+                            <div class="author-avatar">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Sarah Johnson">
+                            </div>
+                            <div class="author-info">
+                                <h4>Sarah Johnson</h4>
+                                <p>Travel Expert</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="guides">
+                    <div class="blog-image">
+                        <img src="https://www.freepik.com/free-ai-image/sun-sets-paris-city-history-generated-by-ai_41481471.htm#fromView=search&page=1&position=2&uuid=4a6f52d1-8f05-4720-bc4f-73e79a9e51b5&query=Paris" alt="Paris Guide">
+                        <div class="blog-category">Destination Guide</div>
+                    </div>
+                    <div class="blog-info">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> March 3, 2024</span>
+                            <span><i class="fas fa-clock"></i> 11 min read</span>
+                        </div>
+                        <h3 class="blog-title">Paris Like a Local: Hidden Gems Beyond the Tourist Trail</h3>
+                        <p class="blog-excerpt">Discover the secret side of Paris with local recommendations for authentic cafes, hidden gardens, and neighborhood gems.</p>
+                        <div class="blog-author">
+                            <div class="author-avatar">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Mike Chen">
+                            </div>
+                            <div class="author-info">
+                                <h4>Mike Chen</h4>
+                                <p>Food & Culture Writer</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="pagination-btn">&laquo; Previous</a>
+                <a href="#" class="pagination-btn active">1</a>
+                <a href="#" class="pagination-btn">2</a>
+                <a href="#" class="pagination-btn">3</a>
+                <a href="#" class="pagination-btn">Next &raquo;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Never Miss a Travel Story</h2>
+                <p>Get our latest travel tips, destination guides, and exclusive deals delivered to your inbox</p>
+                <form class="newsletter-form" id="blog-newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-globe-americas"></i> TravelWithArslan</h3>
+                    <p>Your gateway to extraordinary travel experiences around the world.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="destinations.html">Destinations</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cancellation Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@travelwitharslan.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Travel St, Adventure City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TravelWithArslan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Blog filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const blogCards = document.querySelectorAll('.blog-card');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const category = this.dataset.category;
+                    
+                    // Filter blog cards
+                    blogCards.forEach(card => {
+                        if (category === 'all' || card.dataset.category === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Blog card click functionality
+            blogCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const title = this.querySelector('.blog-title, .featured-title').textContent;
+                    showNotification(`Opening article: "${title}" - Feature coming soon!`, 'info');
+                });
+            });
+            
+            // Newsletter form
+            const newsletterForm = document.getElementById('blog-newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = this.querySelector('.newsletter-input').value;
+                    
+                    if (validateEmail(email)) {
+                        showNotification('Thank you for subscribing to our travel newsletter!', 'success');
+                        this.querySelector('.newsletter-input').value = '';
+                    } else {
+                        showNotification('Please enter a valid email address.', 'error');
+                    }
+                });
+            }
+            
+            // Pagination functionality
+            const paginationBtns = document.querySelectorAll('.pagination-btn');
+            paginationBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all pagination buttons
+                    paginationBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to clicked button (if it's a number)
+                    if (!this.textContent.includes('Previous') && !this.textContent.includes('Next')) {
+                        this.classList.add('active');
+                    }
+                    
+                    showNotification('Loading page... Feature coming soon!', 'info');
+                });
+            });
+        });
+        
+        // Email validation function
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+    </script>
+</body>
+</html>

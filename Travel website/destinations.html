@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore amazing travel destinations worldwide. Detailed guides, stunning photos, and easy booking options for your perfect vacation.">
+    <meta name="keywords" content="travel destinations, vacation spots, travel guides, booking, hotels, flights">
+    <title>Destinations - TravelWithArslan</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .destinations-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(44, 90, 160, 0.8), rgba(255, 107, 107, 0.6)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .destinations-content {
+            padding: 100px 0;
+        }
+        
+        .filter-section {
+            background: #f8f9fa;
+            padding: 30px 0;
+            margin-bottom: 50px;
+        }
+        
+        .filter-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-select {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            background: white;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .filter-select:focus {
+            border-color: #2c5aa0;
+        }
+        
+        .destination-detail {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            transition: transform 0.3s ease;
+        }
+        
+        .destination-detail:hover {
+            transform: translateY(-5px);
+        }
+        
+        .destination-gallery {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: 200px 200px;
+            gap: 5px;
+            height: 400px;
+        }
+        
+        .gallery-main {
+            grid-row: 1 / 3;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .destination-info {
+            padding: 40px;
+        }
+        
+        .destination-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .destination-title {
+            flex: 1;
+        }
+        
+        .destination-title h2 {
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .destination-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .destination-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .rating-stars {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .rating-stars i {
+            color: #ffa500;
+        }
+        
+        .price-section {
+            text-align: right;
+        }
+        
+        .price-from {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .price-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5aa0;
+        }
+        
+        .destination-description {
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .destination-highlights {
+            margin-bottom: 30px;
+        }
+        
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .highlight-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .highlight-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .booking-section {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .booking-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+            color: white;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: #2c5aa0;
+            border: 2px solid #2c5aa0;
+        }
+        
+        .booking-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .travel-guide {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .guide-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .guide-tab {
+            padding: 10px 20px;
+            background: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .guide-tab.active {
+            background: #2c5aa0;
+            color: white;
+        }
+        
+        .guide-content {
+            display: none;
+        }
+        
+        .guide-content.active {
+            display: block;
+        }
+        
+        .guide-list {
+            list-style: none;
+        }
+        
+        .guide-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .guide-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .guide-list i {
+            color: #2c5aa0;
+            width: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .destination-gallery {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(5, 150px);
+                height: auto;
+            }
+            
+            .gallery-main {
+                grid-row: 1 / 3;
+            }
+            
+            .destination-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .price-section {
+                text-align: center;
+            }
+            
+            .booking-section {
+                flex-direction: column;
+            }
+            
+            .booking-btn {
+                min-width: 100%;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><i class="fas fa-globe-americas"></i> TravelWithArslan</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="destinations.html" class="nav-link">Destinations</a>
+                </li>
+                <li class="nav-item">
+                    <a href="blog.html" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link btn-book">Book Now</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="destinations-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Explore Amazing Destinations</h1>
+            <p class="hero-subtitle">Discover your perfect getaway from our curated collection of world-class destinations</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-container">
+                <div class="filter-group">
+                    <label for="region-filter"><i class="fas fa-globe"></i> Region:</label>
+                    <select id="region-filter" class="filter-select">
+                        <option value="all">All Regions</option>
+                        <option value="europe">Europe</option>
+                        <option value="asia">Asia</option>
+                        <option value="america">Americas</option>
+                        <option value="africa">Africa</option>
+                        <option value="oceania">Oceania</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="budget-filter"><i class="fas fa-dollar-sign"></i> Budget:</label>
+                    <select id="budget-filter" class="filter-select">
+                        <option value="all">All Budgets</option>
+                        <option value="budget">Budget ($0-$500)</option>
+                        <option value="mid">Mid-range ($500-$1500)</option>
+                        <option value="luxury">Luxury ($1500+)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="type-filter"><i class="fas fa-map"></i> Type:</label>
+                    <select id="type-filter" class="filter-select">
+                        <option value="all">All Types</option>
+                        <option value="beach">Beach</option>
+                        <option value="city">City</option>
+                        <option value="mountain">Mountain</option>
+                        <option value="cultural">Cultural</option>
+                        <option value="adventure">Adventure</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Content -->
+    <section class="destinations-content">
+        <div class="container">
+            <!-- Santorini Destination -->
+            <div class="destination-detail" id="santorini" data-region="europe" data-budget="luxury" data-type="beach">
+                <div class="destination-gallery">
+                    <div class="gallery-item gallery-main">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Santorini Main">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Santorini Sunset">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Santorini Architecture">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Santorini Beach">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="destination-info">
+                    <div class="destination-header">
+                        <div class="destination-title">
+                            <h2>Santorini, Greece</h2>
+                            <div class="destination-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Cyclades, Aegean Sea, Greece</span>
+                            </div>
+                            <div class="destination-rating">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span>4.9 (2,341 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="price-section">
+                            <div class="price-from">Starting from</div>
+                            <div class="price-amount">$899</div>
+                            <div class="price-from">per person</div>
+                        </div>
+                    </div>
+                    
+                    <p class="destination-description">
+                        Experience the magic of Santorini, where dramatic cliffs meet crystal-clear waters and white-washed buildings create a picture-perfect backdrop. This volcanic island offers breathtaking sunsets, world-class wineries, and a unique blend of ancient history and modern luxury. From the iconic blue-domed churches of Oia to the black sand beaches of Kamari, Santorini promises an unforgettable Mediterranean escape.
+                    </p>
+                    
+                    <div class="destination-highlights">
+                        <h3>What Makes This Special</h3>
+                        <div class="highlights-grid">
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-sun"></i>
+                                </div>
+                                <span>World's Best Sunsets</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-wine-glass"></i>
+                                </div>
+                                <span>Volcanic Wineries</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                                <span>Instagram Paradise</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <span>Mediterranean Cuisine</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-section">
+                        <a href="#" class="booking-btn btn-primary" onclick="bookDestination('santorini', 'hotel')">Book Hotels</a>
+                        <a href="#" class="booking-btn btn-secondary" onclick="bookDestination('santorini', 'flight')">Find Flights</a>
+                        <a href="#" class="booking-btn btn-outline" onclick="bookDestination('santorini', 'package')">View Packages</a>
+                    </div>
+                    
+                    <div class="travel-guide">
+                        <h3>Travel Guide</h3>
+                        <div class="guide-tabs">
+                            <button class="guide-tab active" onclick="showGuideContent('best-time')">Best Time to Visit</button>
+                            <button class="guide-tab" onclick="showGuideContent('attractions')">Top Attractions</button>
+                            <button class="guide-tab" onclick="showGuideContent('tips')">Travel Tips</button>
+                        </div>
+                        
+                        <div id="best-time" class="guide-content active">
+                            <ul class="guide-list">
+                                <li><i class="fas fa-calendar"></i> <strong>Peak Season:</strong> June to September (warm weather, crowded)</li>
+                                <li><i class="fas fa-leaf"></i> <strong>Shoulder Season:</strong> April-May, October (mild weather, fewer crowds)</li>
+                                <li><i class="fas fa-snowflake"></i> <strong>Off Season:</strong> November to March (cooler, many businesses closed)</li>
+                                <li><i class="fas fa-thermometer-half"></i> <strong>Best Weather:</strong> May and September (perfect temperatures)</li>
+                            </ul>
+                        </div>
+                        
+                        <div id="attractions" class="guide-content">
+                            <ul class="guide-list">
+                                <li><i class="fas fa-church"></i> Oia Village - Famous blue-domed churches and sunset views</li>
+                                <li><i class="fas fa-mountain"></i> Fira Town - Capital with stunning caldera views</li>
+                                <li><i class="fas fa-umbrella-beach"></i> Red Beach - Unique red volcanic sand beach</li>
+                                <li><i class="fas fa-ruins"></i> Akrotiri Archaeological Site - Ancient Minoan city</li>
+                                <li><i class="fas fa-wine-bottle"></i> Santo Wines Winery - Cliff-top wine tasting</li>
+                            </ul>
+                        </div>
+                        
+                        <div id="tips" class="guide-content">
+                            <ul class="guide-list">
+                                <li><i class="fas fa-shoe-prints"></i> Wear comfortable walking shoes for cobblestone streets</li>
+                                <li><i class="fas fa-clock"></i> Book sunset dinner reservations well in advance</li>
+                                <li><i class="fas fa-car"></i> Rent an ATV or car to explore the island freely</li>
+                                <li><i class="fas fa-camera"></i> Visit Oia early morning for photos without crowds</li>
+                                <li><i class="fas fa-euro-sign"></i> Carry cash as some small businesses don't accept cards</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tokyo Destination -->
+            <div class="destination-detail" id="tokyo" data-region="asia" data-budget="mid" data-type="city">
+                <div class="destination-gallery">
+                    <div class="gallery-item gallery-main">
+                        <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tokyo Main">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Tokyo Shibuya">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Tokyo Temple">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Tokyo Food">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="destination-info">
+                    <div class="destination-header">
+                        <div class="destination-title">
+                            <h2>Tokyo, Japan</h2>
+                            <div class="destination-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Kanto Region, Honshu Island, Japan</span>
+                            </div>
+                            <div class="destination-rating">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span>4.8 (1,876 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="price-section">
+                            <div class="price-from">Starting from</div>
+                            <div class="price-amount">$1,299</div>
+                            <div class="price-from">per person</div>
+                        </div>
+                    </div>
+                    
+                    <p class="destination-description">
+                        Immerse yourself in the perfect blend of ancient tradition and cutting-edge modernity that defines Tokyo. From serene temples and traditional gardens to neon-lit districts and world-class cuisine, Japan's capital offers an unparalleled urban adventure. Experience the efficiency of the world's largest metropolitan area while discovering hidden gems in quiet neighborhoods and enjoying the warmth of Japanese hospitality.
+                    </p>
+                    
+                    <div class="destination-highlights">
+                        <h3>What Makes This Special</h3>
+                        <div class="highlights-grid">
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <span>World's Best Cuisine</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-torii-gate"></i>
+                                </div>
+                                <span>Ancient Temples</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <span>Future Technology</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </div>
+                                <span>Shopping Paradise</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-section">
+                        <a href="#" class="booking-btn btn-primary" onclick="bookDestination('tokyo', 'hotel')">Book Hotels</a>
+                        <a href="#" class="booking-btn btn-secondary" onclick="bookDestination('tokyo', 'flight')">Find Flights</a>
+                        <a href="#" class="booking-btn btn-outline" onclick="bookDestination('tokyo', 'package')">View Packages</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bali Destination -->
+            <div class="destination-detail" id="bali" data-region="asia" data-budget="budget" data-type="beach">
+                <div class="destination-gallery">
+                    <div class="gallery-item gallery-main">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bali Ulun Danu Temple">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Bali Tanah Lot Temple">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Bali Jatiluwih Rice Terraces">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Bali Kuta Beach">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="destination-info">
+                    <div class="destination-header">
+                        <div class="destination-title">
+                            <h2>Bali, Indonesia</h2>
+                            <div class="destination-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Lesser Sunda Islands, Indonesia</span>
+                            </div>
+                            <div class="destination-rating">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span>4.7 (3,124 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="price-section">
+                            <div class="price-from">Starting from</div>
+                            <div class="price-amount">$699</div>
+                            <div class="price-from">per person</div>
+                        </div>
+                    </div>
+                    
+                    <p class="destination-description">
+                        Discover the tropical paradise of Bali, where pristine beaches meet lush rice terraces and ancient temples. This Indonesian gem offers a perfect blend of relaxation and adventure, from world-class surfing and diving to spiritual retreats and vibrant cultural experiences. Whether you're seeking luxury resorts, budget-friendly accommodations, or authentic local experiences, Bali caters to every type of traveler.
+                    </p>
+                    
+                    <div class="destination-highlights">
+                        <h3>What Makes This Special</h3>
+                        <div class="highlights-grid">
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-waves"></i>
+                                </div>
+                                <span>World-Class Surfing</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-spa"></i>
+                                </div>
+                                <span>Wellness Retreats</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <span>Rice Terraces</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <span>Budget-Friendly</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-section">
+                        <a href="#" class="booking-btn btn-primary" onclick="bookDestination('bali', 'hotel')">Book Hotels</a>
+                        <a href="#" class="booking-btn btn-secondary" onclick="bookDestination('bali', 'flight')">Find Flights</a>
+                        <a href="#" class="booking-btn btn-outline" onclick="bookDestination('bali', 'package')">View Packages</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-globe-americas"></i> TravelWithArslan</h3>
+                    <p>Your gateway to extraordinary travel experiences around the world.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="destinations.html">Destinations</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cancellation Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@travelwitharslan.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Travel St, Adventure City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TravelWithArslan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Filter functionality
+        function filterDestinations() {
+            const regionFilter = document.getElementById('region-filter').value;
+            const budgetFilter = document.getElementById('budget-filter').value;
+            const typeFilter = document.getElementById('type-filter').value;
+            
+            const destinations = document.querySelectorAll('.destination-detail');
+            
+            destinations.forEach(destination => {
+                const region = destination.dataset.region;
+                const budget = destination.dataset.budget;
+                const type = destination.dataset.type;
+                
+                const showRegion = regionFilter === 'all' || region === regionFilter;
+                const showBudget = budgetFilter === 'all' || budget === budgetFilter;
+                const showType = typeFilter === 'all' || type === typeFilter;
+                
+                if (showRegion && showBudget && showType) {
+                    destination.style.display = 'block';
+                } else {
+                    destination.style.display = 'none';
+                }
+            });
+        }
+        
+        // Add event listeners to filters
+        document.getElementById('region-filter').addEventListener('change', filterDestinations);
+        document.getElementById('budget-filter').addEventListener('change', filterDestinations);
+        document.getElementById('type-filter').addEventListener('change', filterDestinations);
+        
+        // Guide tab functionality
+        function showGuideContent(tabName) {
+            // Hide all content
+            document.querySelectorAll('.guide-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.guide-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+        
+        // Booking functionality
+        function bookDestination(destination, type) {
+            const bookingUrls = {
+                santorini: {
+                    hotel: 'https://www.booking.com/searchresults.html?ss=Santorini',
+                    flight: 'https://www.skyscanner.com/flights-to/sant/cheap-flights-to-santorini.html',
+                    package: '#packages-santorini'
+                },
+                tokyo: {
+                    hotel: 'https://www.booking.com/searchresults.html?ss=Tokyo',
+                    flight: 'https://www.skyscanner.com/flights-to/tyoa/cheap-flights-to-tokyo.html',
+                    package: '#packages-tokyo'
+                },
+                bali: {
+                    hotel: 'https://www.booking.com/searchresults.html?ss=Bali',
+                    flight: 'https://www.skyscanner.com/flights-to/bali/cheap-flights-to-bali.html',
+                    package: '#packages-bali'
+                }
+            };
+            
+            const url = bookingUrls[destination]?.[type];
+            if (url) {
+                if (url.startsWith('http')) {
+                    window.open(url, '_blank');
+                } else {
+                    showNotification(`${type.charAt(0).toUpperCase() + type.slice(1)} booking for ${destination} - Feature coming soon!`, 'info');
+                }
+            }
+        }
+        
+        // Gallery lightbox functionality
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const img = this.querySelector('img');
+                const lightbox = document.createElement('div');
+                lightbox.className = 'lightbox';
+                lightbox.innerHTML = `
+                    <div class="lightbox-content">
+                        <img src="${img.src}" alt="${img.alt}">
+                        <button class="lightbox-close">&times;</button>
+                    </div>
+                `;
+                
+                lightbox.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.9);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10000;
+                    cursor: pointer;
+                `;
+                
+                const content = lightbox.querySelector('.lightbox-content');
+                content.style.cssText = `
+                    position: relative;
+                    max-width: 90%;
+                    max-height: 90%;
+                `;
+                
+                const lightboxImg = lightbox.querySelector('img');
+                lightboxImg.style.cssText = `
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                `;
+                
+                const closeBtn = lightbox.querySelector('.lightbox-close');
+                closeBtn.style.cssText = `
+                    position: absolute;
+                    top: -40px;
+                    right: 0;
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 2rem;
+                    cursor: pointer;
+                `;
+                
+                document.body.appendChild(lightbox);
+                
+                lightbox.addEventListener('click', function(e) {
+                    if (e.target === lightbox || e.target === closeBtn) {
+                        lightbox.remove();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
